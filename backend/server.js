@@ -8,6 +8,7 @@ const app = express();
 
 const authRoutes = require("./routes/authRoute")
 const invoiceRoutes = require("./routes/invoiceRoute")
+const AIRoutes = require("./routes/aiRoute")
 
 app.use(
     cors({
@@ -25,7 +26,7 @@ app.use(express.json());
 
 app.use("/api/auth",authRoutes)
 app.use("/api/invoices",invoiceRoutes)
-
+app.use("/api/ai",AIRoutes)
 
 
 
