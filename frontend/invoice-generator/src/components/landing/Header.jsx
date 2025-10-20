@@ -3,14 +3,14 @@ import { Link, Navigate, useNavigate } from "react-router-dom";
 import { FileText,Menu,X } from "lucide-react";
 import ProfileDropdown from '../layouts/ProfileDropdown';
 import Button from '../ui/Button';
+import { useAuth } from '../../context/useAuth';
 
 const Header = () => {
     const [isScrolled,setIsScrolled] = useState(false);
     const [isMenuOpen,setIsMenuOpen] = useState(false);
 
-    const isAuthenticated = false;
-    const user = {name:"Akash" ,email:"akashrawal@gmail.com"}
-    const logout = ()=>{}
+    const {isAuthenticated, user ,logout} = useAuth();
+    
 
     const navigate = useNavigate();
 

@@ -45,7 +45,7 @@ exports.createInvoice = async (req, res) => {
   }
 };
 
-//get /api/invoices
+
 
 exports.getInvoices = async (req, res) => {
   try {
@@ -58,7 +58,7 @@ exports.getInvoices = async (req, res) => {
   }
 };
 
-//get /api/invoice/:id
+
 
 exports.getInvoiceById = async (req, res) => {
   try {
