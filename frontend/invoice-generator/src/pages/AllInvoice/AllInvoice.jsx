@@ -4,7 +4,7 @@ import moment from 'moment'
 import { useNavigate } from "react-router-dom";
 import Button from '../../components/ui/Button';
 import { API_PATHS } from '../../utils/apiPaths';
-import { Edit, FileText, icons, Loader2, Mail, Plus, Search, Sparkles, Trash2 } from 'lucide-react';
+import { Edit, FileText,  Loader2, Mail, Plus, Search, Sparkles, Trash2 } from 'lucide-react';
 import CreateWithAIModal from '../../components/invoices/CreateWithAIModal';
 import ReminderModal from '../../components/invoices/ReminderModal';
 
