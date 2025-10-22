@@ -392,7 +392,7 @@ const handleSubmit = async () => {
                 className='text-black font-medium hover:underline hover:text-cyan-500'
                  onClick={()=>navigate("/login")}
                 >
-                  Sign up 
+                  Login 
                 </button>
               </p>
             </div>

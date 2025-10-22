@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import HERO_IMG from "../../assets/hero-img.png";
+import HERO_IMG_2 from "../../assets/hero-img-2.png";
 import { useAuth } from "../../context/useAuth";
 
 const Hero = () => {
@@ -44,7 +45,7 @@ const Hero = () => {
         </div>
         <div className="mt-12 sm:mt-16 relative max-w-5xl mx-auto">
           <img
-            src={HERO_IMG}
+            src={HERO_IMG_2}
             alt="invoice App Screenshot"
             className="rounded-2xl shadow-2xl shadow-gray-300 border-4 border-gray-200/20"
           />

@@ -95,7 +95,7 @@ const sidebarCollapsed = !isMobile && false;
               <div className="w-8 h-8 bg-gradient-to-br from-blue-900 to-blue-700 rounded-lg flex items-center justify-center ">
                 <Briefcase className='w-5 h-5 text-white'/>
               </div>
-              {!sidebarCollapsed && <span className='text-gray-900 font-bold text-xl'>AI Invoice App</span>}
+              {!sidebarCollapsed && <span className='text-gray-900 font-bold text-xl' >AI Invoice App</span>}
               
               </Link>
             </div>

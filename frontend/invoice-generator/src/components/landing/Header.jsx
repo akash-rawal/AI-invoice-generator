@@ -32,9 +32,9 @@ const Header = () => {
             <div className="flex items-center justify-between h-16 lg:h-20">
               <div className="flex items-center space-x-2">
                 <div className="w-8 h-8 bg-blue-900 rounded-md flex items-center justify-center">
-                  <FileText className='w-4 h-4 text-white'/>
+                  <FileText className='w-4 h-4 text-white' />
                 </div>
-                <span className='text-xl font-bold text-gray-900'>
+                <span  className='text-xl font-bold text-gray-900'>
                   AI Invoice App
 
                 </span>
