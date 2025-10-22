@@ -23,16 +23,16 @@ const CreateInvoice = ({existingInvoice,onSave}) => {
       invoiceNumber: "",
       invoiceDate: new Date().toISOString().split("T")[0],
       dueDate: "",
-      billForm: {
-        businessName: user?.businessName || "",
-        email : user?.email || "",
-        address:user?.address || "",
-        phone: user?.phone || "",
-      },
-      billTo:{clientName: "", email:"", address: "", phone: ""},
-      items: [{name:"",quantity:1, unitPrice: 0,taxPercent: 0}],
+      billFrom: {
+      businessName: user?.businessName || "",
+      email: user?.email || "",
+      address: user?.address || "",
+      phone: user?.phone || ""
+    },
+      billTo: {clientName: "", email: "", address: "", phone: ""},
+      items: [{name: "", quantity: 1, unitPrice: 0, taxPercent: 0}],
       notes: "",
-      paymentTerms: "Net 15",
+      paymentTerms: "Net 15"
 
     }
   );
@@ -61,8 +61,8 @@ const CreateInvoice = ({existingInvoice,onSave}) => {
       if(existingInvoice){
         setFormData({
           ...existingInvoice,
-          invoiceDate: moment(existingInvoice.invoiceDate).format("DD-MM-YYYY"),
-          dueDate: moment(existingInvoice.dueDate).format("DD-MM-YYYY"),
+          invoiceDate: moment(existingInvoice.invoiceDate).format("YYYY-MM-DD"),
+          dueDate: moment(existingInvoice.dueDate).format("YYYY-MM-DD"),
         });
       }else{
         const generateNewInvoiceNumber = async()=>{
@@ -89,7 +89,7 @@ const CreateInvoice = ({existingInvoice,onSave}) => {
     },[existingInvoice]);
 
 
-    const handleInputChange = (e,section,index)=>{
+    const handleInputChange = (e,section,index=undefined)=>{
       const { name,value} = e.target;
       if(section){
         setFormData((prev)=>({...prev,[section]:{...prev[section], [name]: value}}));
@@ -178,10 +178,10 @@ const CreateInvoice = ({existingInvoice,onSave}) => {
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
         <div className="bg-white p-6 rounded-lg shadow-sm shadow-gray-100 border border-slate-200 space-y-4 ">
           <h3 className="text-lg font-semibold text-slate-900 mb-2">Bill Form</h3>
-          <InputField label="Business Name"  name="businessName" value={formData.billForm.businessName} onChange={(e)=>handleInputChange(e,"billFrom")}/>
-          <InputField label="Email" type="email"   name="email" value={formData.billForm.email} onChange={(e)=>handleInputChange(e,"billFrom")}/>
-          <TextareaField label="Address"    name="address" value={formData.billForm.address} onChange={(e)=>handleInputChange(e,"billFrom")}/>
-            <InputField label="Phone"  name="phone" value={formData.billForm.phone} onChange={(e)=>handleInputChange(e,"billFrom")}/>
+          <InputField label="Business Name"  name="businessName" value={formData.billFrom.businessName} onChange={(e)=>handleInputChange(e,"billFrom")}/>
+          <InputField label="Email" type="email"   name="email" value={formData.billFrom.email} onChange={(e)=>handleInputChange(e,"billFrom")}/>
+          <TextareaField label="Address"    name="address" value={formData.billFrom.address} onChange={(e)=>handleInputChange(e,"billFrom")}/>
+            <InputField label="Phone"  name="phone" value={formData.billFrom.phone} onChange={(e)=>handleInputChange(e,"billFrom")}/>
             
         </div>
         <div className="bg-white p-6 rounded-lg shadow-sm shadow-gray-100 border border-slate-200 space-y-4">
@@ -213,7 +213,7 @@ const CreateInvoice = ({existingInvoice,onSave}) => {
               {formData.items.map((item,index)=>(
                 <tr key={index} className="hover:bg-slate-50">
                   <td className="px-2 sm:px-6 py-4">
-                    <input type="text" name='name' value={item.value} onChange={(e)=> handleInputChange(e,null,index)} className="w-full h-10 px-3 py-2 border-slate-200 rounded-lg bg-white text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent" placeholder='Item Name' />
+                    <input type="text" name='name' value={item.name} onChange={(e)=> handleInputChange(e,null,index)} className="w-full h-10 px-3 py-2 border-slate-200 rounded-lg bg-white text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent" placeholder='Item Name' />
                   </td>
                   <td className="px-2 sm:px-6 py-4">
                     <input type="number" name='quantity' value={item.quantity} onChange={(e)=> handleInputChange(e,null,index)} className="w-full h-10 px-3 py-2 border-slate-200 rounded-lg bg-white text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent" placeholder='1' />
