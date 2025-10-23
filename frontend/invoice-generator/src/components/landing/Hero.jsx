@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import HERO_IMG from "../../assets/hero-img.png";
+
 import HERO_IMG_2 from "../../assets/hero-img-2.png";
 import { useAuth } from "../../context/useAuth";
 
