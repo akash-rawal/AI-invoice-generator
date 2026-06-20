@@ -142,7 +142,7 @@ const sidebarCollapsed = !isMobile && false;
                       ):(<Menu className='h-5 w-5 text-gray-600'/>)}
                     </button>
                   )}
-                  <div >
+                  <div className='flex flex-col'>
                     <h1 className="text-base font-semibold text-gray-900">
                       Welcome back, {user?.name}!
                     </h1>
@@ -153,6 +153,7 @@ const sidebarCollapsed = !isMobile && false;
                 </div>
 
                 <div className="flex items-center space-x-3">
+                  <button className='bg-gradient-to-r from-blue-950 to-blue-900 hover:bg-gray-800 text-white px-5 py-2 rounded-lg font-medium transition-all duration-200 hover:scale-105 hover:shadow-lg' onClick={()=>navigate("/")}>home</button>
                   <ProfileDropdown
                   isOpen={profileDropdownOpen}
                   onToggle={(e)=>{
