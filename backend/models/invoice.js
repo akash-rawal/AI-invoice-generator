@@ -8,8 +8,7 @@ const itemSchema = new mongoose.Schema(
     quantity: { type: Number, required: true },
     unitPrice: { type: Number, required: true },
     taxPercent: { type: Number, default:0},
-    total: { type: Number, required: true },
-     
+    total: { type: Number, required: true },  
     
   }
  

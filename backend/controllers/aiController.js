@@ -4,6 +4,50 @@ const Invoice = require("../models/invoice");
 
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
 
+const generateAIContent = async (prompt) => {
+  if (process.env.GROQ_API_KEY) {
+    try {
+      console.log("Attempting AI call with Groq...");
+      const response = await fetch("https://api.groq.com/openai/v1/chat/completions", {
+        method: "POST",
+        headers: {
+          "Authorization": `Bearer ${process.env.GROQ_API_KEY}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          model: "llama-3.3-70b-versatile",
+          messages: [
+            {
+              role: "user",
+              content: prompt,
+            },
+          ],
+        }),
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        if (data.choices && data.choices[0] && data.choices[0].message) {
+          console.log("Groq call successful.");
+          return data.choices[0].message.content;
+        }
+      }
+      console.warn("Groq request failed with status:", response.status);
+    } catch (groqError) {
+      console.error("Groq API call error, falling back to Gemini:", groqError.message);
+    }
+  } else {
+    console.log("No GROQ_API_KEY found, falling back to Gemini.");
+  }
+
+  // Fallback to Gemini
+  console.log("Attempting AI call with Gemini...");
+  const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash" });
+  const result = await model.generateContent(prompt);
+  return result.response.text();
+};
+
+
 const praseInvoiceFromText = async (req, res) => {
   const { text } = req.body;
 
@@ -35,10 +79,7 @@ ${text}
 
 Extract the data and provide only the JSON object, no additional text.`;
 
-    const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash" });
-    const result = await model.generateContent(prompt);
-    
-    let responseText = result.response.text();
+    const responseText = await generateAIContent(prompt);
     
     
     const cleanedJson = responseText
@@ -77,9 +118,7 @@ Use the following details to personalize the email:
 
 The tone should be friendly but clear. Keep it concise. Start the email with "Subject:".`;
 
-const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash" });
-    const result = await model.generateContent(prompt);
-    const emailContent = result.response.text();
+    const emailContent = await generateAIContent(prompt);
 
     res.status(200).json({
       
@@ -131,9 +170,7 @@ const getDashboardSummary = async (req, res) => {
                 Example format: { "insights": ["Your revenue is looking strong this month!", "You have 5 overdue invoices that need attention."] }`;
 
     
-    const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash" });
-    const result = await model.generateContent(prompt);
-    const responseText = result.response.text();
+    const responseText = await generateAIContent(prompt);
 
 
     const cleanedJson = responseText
