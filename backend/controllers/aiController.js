@@ -1,38 +1,24 @@
 const { GoogleGenerativeAI } = require("@google/generative-ai");
+const Groq = require("groq-sdk");
 const Invoice = require("../models/invoice");
 
 
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
+const groq = new Groq({ apiKey: process.env.GROQ_API_KEY });
 
 const generateAIContent = async (prompt) => {
   if (process.env.GROQ_API_KEY) {
     try {
-      console.log("Attempting AI call with Groq...");
-      const response = await fetch("https://api.groq.com/openai/v1/chat/completions", {
-        method: "POST",
-        headers: {
-          "Authorization": `Bearer ${process.env.GROQ_API_KEY}`,
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          model: "llama-3.1-8b-instant",
-          messages: [
-            {
-              role: "user",
-              content: prompt,
-            },
-          ],
-        }),
+      console.log("Attempting AI call with Groq SDK...");
+      const chatCompletion = await groq.chat.completions.create({
+        messages: [{ role: "user", content: prompt }],
+        model: "llama-3.1-8b-instant",
       });
 
-      if (response.ok) {
-        const data = await response.json();
-        if (data.choices && data.choices[0] && data.choices[0].message) {
-          console.log("Groq call successful.");
-          return data.choices[0].message.content;
-        }
+      if (chatCompletion.choices && chatCompletion.choices[0] && chatCompletion.choices[0].message) {
+        console.log("Groq SDK call successful.");
+        return chatCompletion.choices[0].message.content;
       }
-      console.warn("Groq request failed with status:", response.status);
     } catch (groqError) {
       console.error("Groq API call error, falling back to Gemini:", groqError.message);
     }
