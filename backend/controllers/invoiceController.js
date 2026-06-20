@@ -45,11 +45,12 @@ exports.createInvoice = async (req, res) => {
   }
 };
 
-
-
 exports.getInvoices = async (req, res) => {
   try {
-    const invoices = await Invoice.find({user:req.user.id}).populate("user", "name email");
+    const invoices = await Invoice.find({ user: req.user.id }).populate(
+      "user",
+      "name email",
+    );
     res.json(invoices);
   } catch (error) {
     res
@@ -58,28 +59,24 @@ exports.getInvoices = async (req, res) => {
   }
 };
 
-
-
 exports.getInvoiceById = async (req, res) => {
   try {
     const invoice = await Invoice.findById(req.params.id).populate(
       "user",
-      "name email"
+      "name email",
     );
     if (!invoice) return res.status(404).json({ message: "invoice not found" });
-    
-    if(invoice.user._id.toString() !== req.user.id){
-      return res.status(401).json({message:"not authorized"})
+
+    if (invoice.user._id.toString() !== req.user.id) {
+      return res.status(401).json({ message: "not authorized" });
     }
-    
+
     res.json(invoice);
   } catch (error) {
-    res
-      .status(500)
-      .json({
-        message: "error fetching invoice invoice",
-        error: error.message,
-      });
+    res.status(500).json({
+      message: "error fetching invoice invoice",
+      error: error.message,
+    });
   }
 };
 
@@ -125,7 +122,7 @@ exports.updateInvoice = async (req, res) => {
       },
       {
         new: true,
-      }
+      },
     );
     if (!updatedInvoice)
       return res.status(404).json({ message: "invoice not found" });
